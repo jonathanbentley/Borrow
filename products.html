@@ -78,11 +78,7 @@
 									style="max-width: 30%; height: auto; width: auto/9;" alt=""></li>
 								<li><h3>Lawnmower</h3></li>
 								<li><h3>$10/hour</h3></li>
-								<script src="https://www.paypalobjects.com/api/button.js?"
-									data-merchant="braintree" data-id="paypal-button"
-									data-button="checkout" data-color="gold" data-size="medium"
-									data-shape="pill" data-button_type="submit"
-									data-button_disabled="false" type="text/javascript"></script>
+								<li><div id="paypal-button"></div></li>
 							</ul>
 						</div>
 					</div>
@@ -115,132 +111,52 @@
 	<script src="assets/js/util.js" type="text/javascript"></script>
 	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 	<script src="assets/js/main.js" type="text/javascript"></script>
-	<!-- Load the client component. -->
-	<script
-		src="https://js.braintreegateway.com/web/3.11.0/js/client.min.js"
+	<script src="https://www.paypalobjects.com/api/checkout.js"
 		type="text/javascript"></script>
 
-	<!-- Load the PayPal component. -->
-	<script
-		src="https://js.braintreegateway.com/web/3.11.0/js/paypal.min.js"
+	<script src="https://www.paypalobjects.com/api/checkout.js"
 		type="text/javascript"></script>
-
-
 
 	<script type="text/javascript">
-	var paypalButton = document.querySelector('.paypal-button');
-
-	// Create a client.
-	braintree.client.create({
-	  authorization: CLIENT_AUTHORIZATION
-	}, function (clientErr, clientInstance) {
-
-	  // Stop if there was a problem creating the client.
-	  // This could happen if there is a network error or if the authorization
-	  // is invalid.
-	  if (clientErr) {
-	    console.error('Error creating client:', clientErr);
-	    return;
-	  }
-
-	  // Create a PayPal component.
-	  braintree.paypal.create({
-	    client: clientInstance
-	  }, function (paypalErr, paypalInstance) {
-
-	    // Stop if there was a problem creating PayPal.
-	    // This could happen if there was a network error or if it's incorrectly
-	    // configured.
-	    if (paypalErr) {
-	      console.error('Error creating PayPal:', paypalErr);
-	      return;
-	    }
-
-	    // Enable the button.
-	    paypalButton.removeAttribute('disabled');
-
-	    // When the button is clicked, attempt to tokenize.
-	    paypalButton.addEventListener('click', function (event) {
-
-	      // Because tokenization opens a popup, this has to be called as a result of
-	      // customer action, like clicking a button—you cannot call this at any time.
-	      paypalInstance.tokenize({
-	        flow: 'vault'
-	      }, function (tokenizeErr, payload) {
-
-	        // Stop if there was an error.
-	        if (tokenizeErr) {
-	          if (tokenizeErr.type !== 'CUSTOMER') {
-	            console.error('Error tokenizing:', tokenizeErr);
-	          }
-	          return;
-	        }
-
-	        // Tokenization succeeded!
-	        paypalButton.setAttribute('disabled', true);
-	        console.log('Got a nonce! You should submit this to your server.');
-	        console.log(payload.nonce);
-
-	      });
-
-	    }, false);
-
-	  });
-
-	});
-		
-	
-		// Fetch the button you are using to initiate the PayPal flow
-		var paypalButton = document.getElementById('paypal-button');
-
-		// Create a Client component
-		braintree.client
-				.create(
+		paypal.Button
+				.render(
 						{
-							authorization : 'AccB_WRzqrRdouf9xLUzqRUapU-ojcrs9Zsr_43mtaPzIZCwYqWndyP715Du1XHN6QJI0sN8saGUdnlz'
-						},
-						function(clientErr, clientInstance) {
-							// Create PayPal component
-							braintree.paypal
-									.create(
-											{
-												client : clientInstance
-											},
-											function(err, paypalInstance) {
-												paypalButton
-														.addEventListener(
-																'click',
-																function() {
-																	// Tokenize here!
-																	paypalInstance
-																			.tokenize(
-																					{
-																						flow : 'checkout', // Required
-																						amount : 10.00, // Required
-																						currency : 'USD', // Required
-																						locale : 'en_US',
-																						enableShippingAddress : true,
-																						shippingAddressEditable : false,
-																						shippingAddressOverride : {
-																							recipientName : 'Scruff McGruff',
-																							line1 : '1234 Main St.',
-																							line2 : 'Unit 1',
-																							city : 'Chicago',
-																							countryCode : 'US',
-																							postalCode : '60652',
-																							state : 'IL',
-																							phone : '123.456.7890'
-																						}
-																					},
-																					function(
-																							err,
-																							tokenizationPayload) {
-																						// Tokenization complete
-																						// Send tokenizationPayload.nonce to server
-																					});
-																});
-											});
-						});
+							env : 'sandbox', // Optional: specify 'sandbox' environment
+
+							client : {
+								sandbox : 'AccB_WRzqrRdouf9xLUzqRUapU-ojcrs9Zsr_43mtaPzIZCwYqWndyP715Du1XHN6QJI0sN8saGUdnlz',
+								production : 'xxxxxxxxx'
+							},
+
+							payment : function() {
+
+								var env = this.props.env;
+								var client = this.props.client;
+
+								return paypal.rest.payment.create(env, client,
+										{
+											transactions : [ {
+												amount : {
+													total : '10.00',
+													currency : 'USD'
+												}
+											} ]
+										});
+							},
+
+							commit : true, // Optional: show a 'Pay Now' button in the checkout flow
+
+							onAuthorize : function(data, actions) {
+
+								// Optional: display a confirmation page here
+
+								return actions.payment.execute().then(
+										function() {
+											// Show a success page to the buyer
+										});
+							}
+
+						}, '#paypal-button');
 	</script>
 </body>
 </html>

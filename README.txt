@@ -1,52 +1,14 @@
-Spectral by HTML5 UP
-html5up.net | @ajlkn
-Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+CHECKOUT WITH PAYPAL REST API DEMO
 
+1) Download PHP server.
+Use a server such as XAMPP (https://www.apachefriends.org/index.html) to be able to host the Demo code sample.
 
-A big, modern, blocky affair with a mobile-style menu, fully responsive styling,
-and an assortment of pre-styled elements. So, pretty much what you were expecting
--- except, of course, for how it's put together, specifically:
+2) Browse to the htdocs directory of xampp. Unzip the downloaded demo code folder and place it in this htdocs directory.
 
-- It's built on Skel 3*, a leaner, more modular rewrite of my responsive framework.
+3) Start the Apache server in XAMPP from the XAMPP control panel.
 
-  (* = still in development as of this writing)
+4) Open the website in the browser and access it as: http://my_domain/php_code_folder_name/index.php
+   Here, my_domain will be localhost if hosting on your own machine.
+   The php_code_folder_name is the name of the folder under which the downloaded code resides ('Checkout' folder in case you have not changed the default name).
 
-- It uses flexbox*, which eliminates all kinds of terrible hacks and clunky layout
-  stopgaps (like CSS grid systems).
-
-  (* = not supported on IE8/9, but non-flexbox fallbacks are included)
-
-- It uses Sass* a lot more intelligently, thanks in part to several new mixins
-  and functions I've been working on (as well as a few by @HugoGiraudel).
-
-  (* = still entirely optional if you prefer vanilla CSS :)
-
-- A ton of other stuff.
-
-In short, Spectral's the culmination of several new things I'm working on/trying out,
-so please, let me know what you think :)
-
-Demo images* courtesy of Unsplash, a radtastic collection of CC0 (public domain) images
-you can use for pretty much whatever.
-
-(* = not included)
-
-AJ
-aj@lkn.io | @ajlkn
-
-
-Credits:
-
-	Demo Images:
-		Unsplash (unsplash.com)
-
-	Icons:
-		Font Awesome (fortawesome.github.com/Font-Awesome)
-
-	Other:
-		jQuery (jquery.com)
-		html5shiv.js (@afarkas @jdalton @jon_neal @rem)
-		background-size polyfill (github.com/louisremi)
-		Misc. Sass functions (@HugoGiraudel)
-		Respond.js (j.mp/respondjs)
-		Skel (skel.io)
+5) Read further instructions on the above page you open.
