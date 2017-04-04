@@ -1,3 +1,7 @@
+<?php
+include ('login.php'); // Includes Login Script
+?>
+
 <!DOCTYPE HTML>
 <!--
 	Spectral by HTML5 UP
@@ -36,21 +40,28 @@
 <body>
 
 	<!-- Navbar -->
-	<!-- Navbar -->
 	<div class="w3-top" style="z-index: 999">
 		<ul class="w3-navbar w3-white w3-card-2 w3-left-align">
 			<li class="w3-hide-medium w3-hide-large w3-opennav w3-right"><a
 				class="w3-padding-large" href="javascript:void(0)"
 				onclick="myFunction()" title="Toggle Navigation Menu"><i
 					class="fa fa-bars"></i></a></li>
-			<li><a href="index.html"
-				class="w3-hover-none w3-hover-text-grey w3-padding-large">[borrow]</a></li>
-			<li class="w3-hide-small"><a href="products.html"
-				class=" w3-padding-large">for rent</a></li>
-			<li class="w3-hide-small"><a href="aboutus.html"
-				class=" w3-padding-large">about</a></li>
-			<li class="w3-hide-small"><a href="signup.html"
-				class=" w3-padding-large">sign up</a></li>
+			<li><a href="index.php" class="w3-hover-none w3-hover-text-grey w3-padding-large">[borrow]</a></li>
+			<li class="w3-hide-small"><a href="products.php" class=" w3-padding-large">for rent</a></li>
+			<li class="w3-hide-small"><a href="about.php" class=" w3-padding-large">about</a></li>
+			<li class="w3-hide-small"><a href="sign_up.html" class=" w3-padding-large">sign up</a></li>
+			<?php
+				if (isset ( $_SESSION ['login_user'] )) {
+					echo  "<li class=\"w3-hide-small\" style=\"float:right;\"><a href=\"profile.php\" class=\" w3-padding-large\">".$_SESSION ["firstname"]."</a></li>";
+				}
+			?>
+			<li class="w3-hide-small" style="float:right"><?php
+			if (! isset ( $_SESSION ['login_user'] )) {
+				echo "<a href=\"sign_in.php\" class=\"w3-padding-large\">sign in</a>";
+			} else {
+				echo "<a href=\"logout.php\" class=\"w3-padding-large\">sign out</a>";
+			}
+			?></li>
 		</ul>
 	</div>
 

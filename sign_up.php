@@ -9,14 +9,14 @@ if ($db->connect_error) :
 
     endif;
 
-$firstNameData = $_POST ["first"];
-$lastNameData = $_POST ["last"];
-$emailData = $_POST ["email"];
-$streetData = $_POST ["street"];
-$cityData = $_POST ["city"];
-$stateData = $_POST ["state"];
-$zipData = $_POST ["zip"];
-$passwordData = $_POST ["password"];
+$firstNameData = trim($_POST ["first"]);
+$lastNameData = trim($_POST ["last"]);
+$emailData = trim($_POST ["email"]);
+$streetData = trim($_POST ["street"]);
+$cityData = trim($_POST ["city"]);
+$stateData = trim($_POST ["state"]);
+$zipData = trim($_POST ["zip"]);
+$passwordData = md5(trim($_POST ["password"]));
 
 $query2 = "select email from Users";
 $result = $db->query ( $query2 );
